@@ -1,3 +1,3 @@
 # TestNG
-For &lt;Calculator> project with testng tests included
-Fuck you
+for <Calc> project with tesng tests included
+  
