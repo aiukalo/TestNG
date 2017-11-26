@@ -1,39 +1,3 @@
-# TestNG
-for Calc project with tesng tests included
-  
-------------------------------------------
-package com.eleks.tests;
-
-/**
- * Created by Andrii.Iukalo on 17-Nov-17.
- */
-public class Calc {
-
-    public int multiply(int a, int b) {
-        int result = a * b;
-        return result;
-    }
-
-    public int divide(int a, int b) {
-        if (b == 0) {
-            System.out.println("Division impossible");
-        }
-        int result = a / b;
-        return result;
-    }
-
-    public int add(int a, int b) {
-        int result = a + b;
-        return result;
-    }
-
-    public int subtract(int a, int b) {
-        int result = a - b;
-        return result;
-    }
-}
----------------------------------------------
-
 package com.eleks.tests;
 
 import org.testng.Assert;
@@ -62,9 +26,17 @@ public class CalcTest {
     @Test (dataProvider = "Addition")
     public void testAddWithDataProvider(int a, int b, int expResult) throws Exception {
         int actualResult = calc.add(a, b);
+        Assert.assertEquals(actualResult, expResult);
     }
+
+    @Test (dataProvider = "Subtraction")
+    public void restSubtractWithDataProvider(int a, int b, int expResult) throws Exception {
+        int actualResult = calc.subtract(a, b);
+        Assert.assertEquals(actualResult, expResult);
+    }
+
     @DataProvider (name = "Multiplication")
-    private Object[][] getTestData() {
+    private Object[][] getTestMultiplyData() {
         return new Object[][] {
                 {-878, 0, 0},
                 {-800, 1, -800},
@@ -76,7 +48,42 @@ public class CalcTest {
         };
     }
 
+    @DataProvider (name = "Division")
+    private Object[][] getTestDivideData() {
+        return new Object[][] {
+                {-500, -5, 100},
+                {500, -5, -100},
+                {500, 5, 100},
+                {-500, 5, -100},
+                {0, 1, 0},
+                {0, -1, 0},
+                // {0, 0, 0}
+        };
+    }
 
+    @DataProvider (name = "Addition")
+    private Object[][] getTestAddData() {
+        return new Object[][] {
+                {0, 0, 0},
+                {0, 1, 1},
+                {1, 0, 1},
+                {-2, 1, -1},
+                {2, -1, 1},
+                {-1, -1, -2},
+                {1, 1, 2}
+        };
+    }
+
+    @DataProvider (name = "Subtraction")
+    private Object[][] getTestSubtrData() {
+        return new Object[][] {
+                {0, 1, -1},
+                {-1, -1, 0},
+                {0, 0, 0},
+                {1, 1, 0},
+                {1, 2, -1}
+        };
+    }
 
     private Calc calc = new Calc();
 }
